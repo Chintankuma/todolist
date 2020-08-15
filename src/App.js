@@ -9,8 +9,8 @@ import TodoInput from "./components/TodoInput";
 class App extends Component {
   state = {
     items: [
-      { id: 1, title: "wake up" },
-      { id: 2, title: "morning break fast" },
+      // { id: 1, title: "wake up" },
+      // { id: 2, title: "morning break fast" },
     ],
     id: uuidv4(),
     item: "", //ifs for input item first leer
@@ -19,18 +19,56 @@ class App extends Component {
 
   handleChange = (e) => {
     console.log("handle change");
+    const item = e.target.value;
+    // console.log(item);
+    this.setState({
+      item: e.target.value,
+    });
   };
   handleSubmit = (e) => {
+    e.preventDefault();
     console.log("handle submit");
+    const newItem = {
+      id: this.state.id,
+      title: this.state.item,
+    };
+    const updatedItem = [...this.state.items, newItem];
+    // console.log(updatedItem);
+    this.setState(
+      {
+        items: updatedItem,
+        id: uuidv4(),
+        item: "",
+        editItem: false,
+      },
+      () => {
+        console.log(this.state);
+      }
+    );
   };
   clearList = () => {
     console.log("clear list");
+    this.setState({
+      items: [],
+    });
   };
   handleDelete = (id) => {
     console.log(` handle delete ${id} `);
+    const sortedItem = this.state.items.filter((item) => item.id !== id);
+    this.setState({
+      items: sortedItem,
+    });
   };
   handleEdit = (id) => {
     console.log(`handle Edit ${id}`);
+    const filterdItem = this.state.items.filter((item) => item.id !== id);
+    const selectedItem = this.state.items.find((item) => item.id === id);
+    this.setState({
+      items: filterdItem,
+      item: selectedItem.title,
+      id: id,
+      editItem: true,
+    });
   };
   render() {
     console.log(this.state);
