@@ -22,9 +22,13 @@ export default class TodoInput extends Component {
           </div>
           <button
             type="submit"
-            className="btn btn-block btn-primary mt-3 text-uppercase"
+            className={
+              editItem
+                ? "btn btn-block btn-success mt-3"
+                : "btn btn-block btn-primary mt-3"
+            }
           >
-            add item
+            {editItem ? "edit item" : "Add item"}
           </button>
         </form>
       </div>

@@ -32,7 +32,7 @@ class App extends Component {
       id: this.state.id,
       title: this.state.item,
     };
-    const updatedItem = [...this.state.item, newItem];
+    const updatedItem = [...this.state.items, newItem];
     // console.log(updatedItem);
     this.setState(
       {
@@ -48,12 +48,27 @@ class App extends Component {
   };
   clearList = () => {
     console.log("clear list");
+    this.setState({
+      items: [],
+    });
   };
   handleDelete = (id) => {
     console.log(` handle delete ${id} `);
+    const sortedItem = this.state.items.filter((item) => item.id !== id);
+    this.setState({
+      items: sortedItem,
+    });
   };
   handleEdit = (id) => {
     console.log(`handle Edit ${id}`);
+    const filterdItem = this.state.items.filter((item) => item.id !== id);
+    const selectedItem = this.state.items.find((item) => item.id === id);
+    this.setState({
+      items: filterdItem,
+      item: selectedItem.title,
+      id: id,
+      editItem: true,
+    });
   };
   render() {
     console.log(this.state);
